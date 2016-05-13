@@ -1,4 +1,4 @@
-# Mileager
+# 里程管家 - Mileager
 app：里程管家 的mob纯前端项目
 
 ------
@@ -11,6 +11,7 @@ app：里程管家 的mob纯前端项目
 
 * [刘柳](http://weibo.com/66cnu?is_all=1)
 * [魏亮]()
+* [陈鹏]()
 * [马驰](http://www.himachi.cn)
 
 ## license
