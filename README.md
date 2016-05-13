@@ -9,9 +9,9 @@ app：里程管家 的mob纯前端项目
 
 ## 团队成员
 
-[刘柳](http://weibo.com/66cnu?is_all=1)
-[魏亮]()
-[马驰](http://www.himachi.cn)
+* [刘柳](http://weibo.com/66cnu?is_all=1)
+* [魏亮]()
+* [马驰](http://www.himachi.cn)
 
 ## license
 
