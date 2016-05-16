@@ -1,0 +1,122 @@
+/* 里程管家 css样式 */
+
+@bg-color:#649e63;
+@color:#333;
+
+
+html,body{
+    font-family:"Consolas", "Microsoft YaHei", Arial, sans-serif;
+    font-size:16px;
+    color:@color;
+}
+
+
+@media screen and (max-width:2048px){
+
+    .mileager{
+        .mileager-header{
+            position:fixed;
+            width:100%;
+            height:42px;
+            top:0;
+            left:0;
+            background-color:@bg-color;
+            text-align:center;
+            line-height:42px;
+            color:#fff;
+            z-index:1000;
+            font-weight:800;
+
+            .header-btn{
+                position:absolute;
+                width:28px;
+                height:28px;
+                line-height:28px;
+                text-align:center;
+                color:@bg-color;
+                background-color:#fff;
+                border-radius:15px;
+                top:50%;
+                margin-top:-15px;
+                cursor:pointer;
+
+                &.right{
+                    right:15px;
+                }
+                &.left{
+                    left:15px;
+                }
+
+                &:active{
+                    background-color:#ddd;
+                }
+            }
+        }
+        
+
+        .mileager-footer{
+            position:fixed;
+            width:100%;
+            height:42px;
+            z-index:1000;
+            line-height:42px;
+            bottom:0;
+            left:0;
+            background-color:#ccc;
+        }
+        
+        &.page{
+            padding:55px 15px;
+        }
+
+        .mileager-main{
+            .product-list{
+                list-style:none;
+                margin:0;
+                padding:0;
+
+                li{
+                    padding:16px 0;
+                    border-bottom:1px solid #ccc;
+                }
+                .product-item{
+                    display:block;
+                    overflow:hidden;
+                    color:@color;
+                    text-decoration:none;
+                    outline:none;
+
+                    span.title{
+                        display:block;
+                        margin-bottom:6px;
+                    }
+                    span.content{
+                        display:block;
+                        font-size:14px;
+                        word-break:break-all;
+                        color:#999;
+                    }
+                    span.mileage{
+                        display:block;
+                        margin-top:10px;
+                        font-size:20px;
+                        text-align:right;
+                        color:#235c22;
+                        .mileage-unit{
+                            font-size:14px;
+                            color: @color;
+                        }
+                    }
+                }
+                img{
+                    width:100px;
+                    height:100px;
+                    box-sizing:border-box;
+                    border:1px solid #ccc;
+                    float:left;
+                    margin-right:10px;
+                }
+            }
+        }
+    }
+}
