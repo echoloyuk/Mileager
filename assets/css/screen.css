@@ -70,20 +70,28 @@ body {
     text-decoration: none;
     outline: none;
   }
+  .mileager .mileager-main .product-list .product-item span.tag-panel {
+    display: block;
+  }
+  .mileager .mileager-main .product-list .product-item span.tag-panel .tag {
+    display: inline-block;
+    padding: 0 10px;
+    height: 20px;
+    line-height: 20px;
+    font-size: 11px;
+    border-radius: 10px;
+    color: #fff;
+    background-color: #f5afaf;
+  }
   .mileager .mileager-main .product-list .product-item span.title {
     display: block;
-    margin-bottom: 6px;
-  }
-  .mileager .mileager-main .product-list .product-item span.content {
-    display: block;
-    font-size: 14px;
+    margin: 6px 0;
     word-break: break-all;
-    color: #999;
   }
   .mileager .mileager-main .product-list .product-item span.mileage {
     display: block;
     margin-top: 10px;
-    font-size: 20px;
+    font-size: 24px;
     text-align: right;
     color: #235c22;
   }
@@ -91,11 +99,33 @@ body {
     font-size: 14px;
     color: #333333;
   }
+  .mileager .mileager-main .product-list .product-item span.other {
+    display: block;
+    text-align: right;
+  }
+  .mileager .mileager-main .product-list .product-item span.other .items {
+    display: inline-block;
+    vertical-align: baseline;
+    font-size: 14px;
+    margin-left: 8px;
+  }
+  .mileager .mileager-main .product-list .product-item span.other .items .items-btn {
+    display: inline-block;
+    vertical-align: baseline;
+    width: 22px;
+    height: 22px;
+    line-height: 22px;
+    text-align: center;
+    color: #ed8055;
+    border-radius: 11px;
+  }
+  .mileager .mileager-main .product-list .product-item span.other .items .items-btn span {
+    top: 3px;
+  }
   .mileager .mileager-main .product-list img {
-    width: 100px;
-    height: 100px;
+    width: 130px;
+    height: 130px;
     box-sizing: border-box;
-    border: 1px solid #ccc;
     float: left;
     margin-right: 10px;
   }
