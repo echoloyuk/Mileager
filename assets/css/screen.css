@@ -81,7 +81,12 @@ body {
     font-size: 11px;
     border-radius: 10px;
     color: #fff;
+  }
+  .mileager .mileager-main .product-list .product-item span.tag-panel .tag.ca {
     background-color: #f5afaf;
+  }
+  .mileager .mileager-main .product-list .product-item span.tag-panel .tag.cz {
+    background-color: #9bc6ea;
   }
   .mileager .mileager-main .product-list .product-item span.title {
     display: block;
