@@ -4,6 +4,13 @@
 @color:#333;
 @fl-color:#c7e8c6;
 
+.transition (@type:all, @dur:.3s){
+    -webkit-transition:@type @dur;
+    -moz-transition:@type @dur;
+    -o-transition:@type @dur;
+    -ms-transition:@type @dur;
+    transition:@type @dur;
+}
 
 html,body{
     font-family:"Consolas", "Microsoft YaHei", Arial, sans-serif;
@@ -13,7 +20,6 @@ html,body{
 
 
 @media screen and (max-width:2048px){
-
     .mileager{
         .mileager-header{
             position:fixed;
@@ -240,6 +246,98 @@ html,body{
                     float:left;
                     margin-right:10px;
                 }
+            }
+        }
+        .side-page{
+            position:fixed;
+            z-index:1200;
+            width:80%;
+            height:100%;
+            background-color:#eee;
+            top:0;
+            right:-90%;
+            box-shadow:0 0 10px #000;
+            padding:16px;
+            color:#333;
+            overflow:auto;
+            .transition;
+
+            &.show{
+                right:0;
+            }
+        }
+        .mask{
+            position:fixed;
+            top:0;
+            bottom:0;
+            left:0;
+            right:0;
+            background-color:#000;
+            opacity:0.4;
+            z-index:1100;
+            display:none;
+        }
+        .list-panel{
+            margin-bottom:10px;
+            background-color:#fff;
+
+            .header{
+                border-bottom:1px solid #dfece1;
+                line-height:1.6em;
+                padding:10px;
+
+                .ctrl-panel{
+                    float:right;
+                    font-size:14px;
+                }
+            }
+            .content{
+                padding:10px;
+                line-height:1.6em;
+
+                .content-input{
+                    height:32px;
+                    line-height:28px;
+                    border:1px solid #ccc;
+                    background-color:#fff;
+                    outline: none;
+                    padding:0;
+                    margin:0;
+                }
+            }
+        }
+        ul.select-panel{
+            list-style:none;
+            padding:0;
+            margin:0;
+            overflow:hidden;
+
+            li{
+                float:left;
+                margin:2px;
+                width:40%;
+                height:30px;
+                line-height:30px;
+                padding:4px;
+                background-color:#d4ead4;
+                text-align:center;
+                box-sizing:content-box;
+            }
+        }
+        .side-btn{
+            height:38px;
+            line-height:38px;
+            padding:2px 0;
+            background-color:@bg-color;
+            color:#fff;
+            text-align:center;
+            box-sizing:content-box;
+
+            &:hover{
+                background-color:#a3d8ac;
+            }
+            &:active{
+                background-color:#a3d8ac;
             }
         }
     }
