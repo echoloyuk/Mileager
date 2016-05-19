@@ -9,37 +9,107 @@ body {
   .mileager .mileager-header {
     position: fixed;
     width: 100%;
-    height: 42px;
+    height: 50px;
     top: 0;
     left: 0;
     background-color: #649e63;
     text-align: center;
-    line-height: 42px;
+    padding: 0 90px 0 50px;
     color: #fff;
     z-index: 1000;
     font-weight: 800;
   }
+  .mileager .mileager-header .search-panel {
+    height: 32px;
+    line-height: 24px;
+    position: relative;
+    top: 9px;
+    background-color: #fff;
+    text-align: left;
+    border-radius: 16px;
+    padding: 0 10px 0 14px;
+  }
+  .mileager .mileager-header .search-panel input.search-input {
+    width: 80%;
+    height: 32px;
+    line-height: 32px;
+    outline: none;
+    border: none;
+    margin: 0;
+    padding: 0;
+    color: #333;
+    font-weight: normal;
+  }
+  .mileager .mileager-header .search-panel .search-btn {
+    display: inline-block;
+    vertical-align: bottom;
+    color: #649e63;
+    width: 32px;
+    height: 32px;
+    line-height: 32px;
+    text-align: center;
+    float: right;
+  }
+  .mileager .mileager-header .search-panel .search-btn:active {
+    background-color: #aaa;
+  }
   .mileager .mileager-header .header-btn {
     position: absolute;
-    width: 28px;
-    height: 28px;
-    line-height: 28px;
+    width: 32px;
+    height: 32px;
+    line-height: 32px;
     text-align: center;
-    color: #649e63;
-    background-color: #fff;
-    border-radius: 15px;
+    color: #fff;
+    border-radius: 16px;
     top: 50%;
     margin-top: -15px;
     cursor: pointer;
   }
   .mileager .mileager-header .header-btn.right {
-    right: 15px;
+    right: 10px;
   }
   .mileager .mileager-header .header-btn.left {
-    left: 15px;
+    left: 10px;
+  }
+  .mileager .mileager-header .header-btn.right-l {
+    right: 48px;
   }
   .mileager .mileager-header .header-btn:active {
     background-color: #ddd;
+  }
+  .mileager .mileager-filter {
+    position: fixed;
+    width: 100%;
+    height: 42px;
+    z-index: 1001;
+    line-height: 42px;
+    top: 50px;
+    left: 0;
+    background-color: #c7e8c6;
+  }
+  .mileager .mileager-filter .filter-outer {
+    width: 100%;
+    display: table;
+  }
+  .mileager .mileager-filter .filter-outer .filter-item {
+    display: table-cell;
+    text-align: center;
+    width: 33%;
+  }
+  .mileager .mileager-filter .filter-outer .filter-item .glyphicon {
+    font-size: 12px;
+  }
+  .mileager .mileager-filter:after {
+    position: absolute;
+    width: 0;
+    height: 0;
+    right: 54px;
+    top: -10px;
+    content: '';
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid #c7e8c6;
+    border-top: none;
   }
   .mileager .mileager-footer {
     position: fixed;
@@ -52,7 +122,7 @@ body {
     background-color: #ccc;
   }
   .mileager.page {
-    padding: 55px 15px;
+    padding: 50px 10px;
   }
   .mileager .mileager-main .product-list {
     list-style: none;

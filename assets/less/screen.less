@@ -2,6 +2,7 @@
 
 @bg-color:#649e63;
 @color:#333;
+@fl-color:#c7e8c6;
 
 
 html,body{
@@ -17,39 +18,117 @@ html,body{
         .mileager-header{
             position:fixed;
             width:100%;
-            height:42px;
+            height:50px;
             top:0;
             left:0;
             background-color:@bg-color;
             text-align:center;
-            line-height:42px;
+            padding:0 90px 0 50px;
             color:#fff;
             z-index:1000;
             font-weight:800;
 
+            .search-panel{
+                height:32px;
+                line-height:24px;
+                position:relative;
+                top:9px;
+                background-color:#fff;
+                text-align:left;
+                border-radius:16px;
+                padding:0 10px 0 14px;
+
+                input.search-input{
+                    width:80%;
+                    height:32px;
+                    line-height:32px;
+                    outline:none;
+                    border:none;
+                    margin:0;
+                    padding:0;
+                    color:#333;
+                    font-weight:normal;
+                }
+                .search-btn{
+                    display:inline-block;
+                    vertical-align:bottom;
+                    color:@bg-color;
+                    width:32px;
+                    height:32px;
+                    line-height:32px;
+                    text-align:center;
+                    float:right;
+
+                    &:active{
+                        background-color:#aaa;
+                    }
+                }
+            }
+
             .header-btn{
                 position:absolute;
-                width:28px;
-                height:28px;
-                line-height:28px;
+                width:32px;
+                height:32px;
+                line-height:32px;
                 text-align:center;
-                color:@bg-color;
-                background-color:#fff;
-                border-radius:15px;
+                color:#fff;
+                border-radius:16px;
                 top:50%;
                 margin-top:-15px;
                 cursor:pointer;
 
                 &.right{
-                    right:15px;
+                    right:10px;
                 }
                 &.left{
-                    left:15px;
+                    left:10px;
+                }
+                &.right-l{
+                    right:48px;
                 }
 
                 &:active{
                     background-color:#ddd;
                 }
+            }
+        }
+
+        .mileager-filter{
+            position:fixed;
+            width:100%;
+            height:42px;
+            z-index:1001;
+            line-height:42px;
+            top:50px;
+            left:0;
+            background-color:@fl-color;
+
+            .filter-outer{
+                width:100%;
+                display:table;
+
+                .filter-item{
+                    display:table-cell;
+                    text-align:center;
+                    width:33%;
+
+                    .glyphicon{
+                        font-size:12px;
+                    }
+                }
+            }
+            &:after{
+                position:absolute;
+                width:0;
+                height:0;
+                right:54px;
+                top:-10px;
+                content:'';
+                border-left:10px solid transparent;
+                border-right:10px solid transparent;
+                border-bottom:10px solid @fl-color;
+                border-top:none;
+
             }
         }
         
@@ -66,7 +145,7 @@ html,body{
         }
         
         &.page{
-            padding:55px 15px;
+            padding:50px 10px;
         }
 
         .mileager-main{
