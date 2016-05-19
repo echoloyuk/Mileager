@@ -77,6 +77,9 @@ body {
   .mileager .mileager-header .header-btn:active {
     background-color: #ddd;
   }
+  .mileager .mileager-header .header-btn.focus {
+    color: #f7d992;
+  }
   .mileager .mileager-filter {
     position: fixed;
     width: 100%;
@@ -86,6 +89,7 @@ body {
     top: 50px;
     left: 0;
     background-color: #c7e8c6;
+    display: none;
   }
   .mileager .mileager-filter .filter-outer {
     width: 100%;

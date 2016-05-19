@@ -23,14 +23,14 @@
             <span class="header-btn right">
                 <span class="glyphicon glyphicon-filter" aria-hidden="true" style="top:3px;"></span>
             </span>
-            <span class="header-btn right-l">
+            <span class="header-btn right-l" id="filterBtn">
                 <span class="glyphicon glyphicon-sort" aria-hidden="true" style="top:2px;"></span>
             </span>
             <span class="header-btn left">
                 <span class="glyphicon glyphicon-chevron-left" aria-hidden="true" style="top:2px;"></span>
             </span>
         </section>
-        <section class="mileager-filter">
+        <section class="mileager-filter" id="filter">
             <div class="filter-outer">
                 <div class="filter-item">
                     里程
@@ -129,5 +129,20 @@
         </section>
         <script src="assets/js/jquery.min.js"></script>
         <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+        <script>
+        $(function (){
+            $('#filterBtn').on('click', function (){
+                var $this = $(this);
+                var $f = $('#filter');
+                if ($this.hasClass('focus')){
+                    $this.removeClass('focus');
+                    $f.hide();
+                } else {
+                    $this.addClass('focus');
+                    $f.show();
+                }
+            });
+        });
+        </script
     </body>
 </html>
