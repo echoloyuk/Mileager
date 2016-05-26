@@ -345,5 +345,97 @@ html,body{
                 background-color:#a3d8ac;
             }
         }
+        .img-scroller{
+            width:100%;
+            height:30vh;
+            background-color:#ccc;
+            overflow:hidden;
+            position:relative;
+            
+            .inner{
+                height:100%;
+                width:10000px;
+            }
+            .pt-panel{
+                position:absolute;
+                bottom:0;
+                left:0;
+                right:0;
+                z-index:10;
+                height:20px;
+                text-align:center;
+                opacity:0.5;
+
+                .pt{
+                    display:inline-block;
+                    width:20px;
+                    height:20px;
+                    border-radius:10px;
+                    background-color:#000;
+                    margin:0 4px;
+                }
+            }
+        }
+        .detail-panel{
+            margin:16px 0;
+            line-height:24px;
+            border-bottom:1px solid @bg-color;
+
+            .airline{
+                display:inline-block;
+                vertical-align:text-bottom;
+                font-size:13px;
+                line-height:20px;
+                height:20px;
+                padding:0 10px;
+                background-color:#ccc;
+                float:right;
+                border-radius:10px;
+                color:#fff;
+
+                &.ca{
+                    background-color:#f5afaf;
+                }
+                &.cz{
+                    background-color:#9bc6ea;
+                }
+            }
+            .content{
+                margin:16px 0 30px;
+                .mileage{
+                    font-size:24px;
+                    color:#235c22;
+                    float:right;
+                    .unit{
+                        font-size:16px;
+                    }
+                }
+                .acc{
+                    padding-right:16px;
+                    
+                    .glyphicon{
+                        color:#ed8055;
+                        top:3px;
+                    }
+
+                    .zhi{
+                        font-size:12px;
+                        line-height:14px;
+                        width:14px;
+                        height:14px;
+                        color:#ed8055;
+                        border:1px solid #ed8055;
+                        text-align:center;
+                        display:inline-block;
+                        box-sizing:content-box;
+                    }
+                }
+            }
+        }
+        .product-panel{
+            .product-img{
+                width:100%;
+            }
+        }
     }
 }

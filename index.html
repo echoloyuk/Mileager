@@ -45,16 +45,16 @@
                 </div>
             </section>
             <section class="mileager-main">
-                <ul class="product-list">
+                <ul class="product-list" id="productList">
                     <li>
                         <a class="product-item">
-                            <img src="assets/images/2.jpg" alt="">
+                            <img src="assets/images/6.jpg" alt="">
                             <span class="tag-panel">
                                 <span class="tag ca">凤凰知音</span>
                             </span>
-                            <span class="title">VANS范斯春季蓝色/金色/中性款板鞋休闲鞋</span>
+                            <span class="title">德国碧然德BRITA即热净水吧</span>
                             <span class="mileage">
-                                18900<span class="mileage-unit">里程</span>
+                                32800<span class="mileage-unit">里程</span>
                             </span>
                             <span class="other">
                                 <span class="items">
@@ -220,6 +220,9 @@
             $('#confirm').on('click', function (){
                 hideSide();
             })
+            $('#productList li').on('click', function (){
+                window.location.href = 'detail.html';
+            });
         });
         </script>
     </body>

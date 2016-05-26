@@ -302,4 +302,88 @@ body {
   .mileager .side-btn:active {
     background-color: #a3d8ac;
   }
+  .mileager .img-scroller {
+    width: 100%;
+    height: 30vh;
+    background-color: #ccc;
+    overflow: hidden;
+    position: relative;
+  }
+  .mileager .img-scroller .inner {
+    height: 100%;
+    width: 10000px;
+  }
+  .mileager .img-scroller .pt-panel {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    height: 20px;
+    text-align: center;
+    opacity: 0.5;
+  }
+  .mileager .img-scroller .pt-panel .pt {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    background-color: #000;
+    margin: 0 4px;
+  }
+  .mileager .detail-panel {
+    margin: 16px 0;
+    line-height: 24px;
+    border-bottom: 1px solid #649e63;
+  }
+  .mileager .detail-panel .airline {
+    display: inline-block;
+    vertical-align: text-bottom;
+    font-size: 13px;
+    line-height: 20px;
+    height: 20px;
+    padding: 0 10px;
+    background-color: #ccc;
+    float: right;
+    border-radius: 10px;
+    color: #fff;
+  }
+  .mileager .detail-panel .airline.ca {
+    background-color: #f5afaf;
+  }
+  .mileager .detail-panel .airline.cz {
+    background-color: #9bc6ea;
+  }
+  .mileager .detail-panel .content {
+    margin: 16px 0 30px;
+  }
+  .mileager .detail-panel .content .mileage {
+    font-size: 24px;
+    color: #235c22;
+    float: right;
+  }
+  .mileager .detail-panel .content .mileage .unit {
+    font-size: 16px;
+  }
+  .mileager .detail-panel .content .acc {
+    padding-right: 16px;
+  }
+  .mileager .detail-panel .content .acc .glyphicon {
+    color: #ed8055;
+    top: 3px;
+  }
+  .mileager .detail-panel .content .acc .zhi {
+    font-size: 12px;
+    line-height: 14px;
+    width: 14px;
+    height: 14px;
+    color: #ed8055;
+    border: 1px solid #ed8055;
+    text-align: center;
+    display: inline-block;
+    box-sizing: content-box;
+  }
+  .mileager .product-panel .product-img {
+    width: 100%;
+  }
 }
