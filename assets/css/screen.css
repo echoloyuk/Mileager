@@ -19,6 +19,10 @@ body {
     z-index: 1000;
     font-weight: 800;
   }
+  .mileager .mileager-header.detail {
+    padding: 0 50px;
+    line-height: 50px;
+  }
   .mileager .mileager-header .search-panel {
     height: 32px;
     line-height: 24px;
