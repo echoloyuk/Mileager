@@ -11,9 +11,9 @@ app：里程管家 的mob纯前端项目
 
 ![](doc/d-1.jpg)
 
-![](doc/d-2.jpg)
-
 ![](doc/d-3.jpg)
+
+![](doc/d-4.jpg)
 
 ## 团队成员
 
