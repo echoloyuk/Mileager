@@ -3,7 +3,7 @@ html,
 body {
   font-family: "Consolas", "Microsoft YaHei", Arial, sans-serif;
   font-size: 16px;
-  color: #333333;
+  color: #333;
 }
 @media screen and (max-width: 2048px) {
   .mileager .mileager-header {
@@ -144,7 +144,7 @@ body {
   .mileager .mileager-main .product-list .product-item {
     display: block;
     overflow: hidden;
-    color: #333333;
+    color: #333;
     text-decoration: none;
     outline: none;
   }
@@ -180,7 +180,7 @@ body {
   }
   .mileager .mileager-main .product-list .product-item span.mileage .mileage-unit {
     font-size: 14px;
-    color: #333333;
+    color: #333;
   }
   .mileager .mileager-main .product-list .product-item span.other {
     display: block;
@@ -278,7 +278,7 @@ body {
   }
   .mileager ul.select-panel li {
     float: left;
-    margin: 2px;
+    margin: 2px 4px 2px 0;
     width: 40%;
     height: 30px;
     line-height: 30px;
@@ -286,6 +286,9 @@ body {
     background-color: #d4ead4;
     text-align: center;
     box-sizing: content-box;
+  }
+  .mileager ul.select-panel.narrow li {
+    width: 25%;
   }
   .mileager .side-btn {
     height: 38px;

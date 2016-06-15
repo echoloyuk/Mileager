@@ -6,7 +6,7 @@
         <meta name="renderer" content="webkit">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
-        <title>里程管家</title>
+        <title>航旅里程</title>
         <link href="assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
         <link href="assets/css/screen.css" rel="stylesheet">
     </head>
@@ -61,7 +61,7 @@
                                     <span class="items-btn"><span class="glyphicon glyphicon-heart" aria-hidden="true" ></span></span><span>12340</span>
                                 </span>
                                 <span class="items">
-                                    <span class="items-btn"><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true" ></span></span><span>12340</span>
+                                    <span class="items-btn">值</span><span>12340</span>
                                 </span>
                             </span>
                         </a>
@@ -81,7 +81,7 @@
                                     <span class="items-btn"><span class="glyphicon glyphicon-heart" aria-hidden="true" ></span></span><span>1340</span>
                                 </span>
                                 <span class="items">
-                                    <span class="items-btn"><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true" ></span></span><span>1230</span>
+                                    <span class="items-btn">值</span><span>1230</span>
                                 </span>
                             </span>
                         </a>
@@ -101,7 +101,7 @@
                                     <span class="items-btn"><span class="glyphicon glyphicon-heart" aria-hidden="true" ></span></span><span>140</span>
                                 </span>
                                 <span class="items">
-                                    <span class="items-btn"><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true" ></span></span><span>340</span>
+                                    <span class="items-btn">值</span><span>340</span>
                                 </span>
                             </span>
                         </a>
@@ -121,7 +121,7 @@
                                     <span class="items-btn"><span class="glyphicon glyphicon-heart" aria-hidden="true" ></span></span><span>1340</span>
                                 </span>
                                 <span class="items">
-                                    <span class="items-btn"><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true" ></span></span><span>1230</span>
+                                    <span class="items-btn">值</span><span>1230</span>
                                 </span>
                             </span>
                         </a>
@@ -176,6 +176,14 @@
                     <input type="number" class="content-input" placeholder="0" style="width:80px;">
                     <span>-</span>
                     <input type="number" class="content-input" placeholder="10000" style="width:80px;">
+                    
+                    <ul class="select-panel narrow" style="margin-top:10px">
+                        <li>1-5k</li>
+                        <li>5k-1w</li>
+                        <li>1w-2w</li>
+                        <li>2w-3w</li>
+                        <li>3w-5w</li>
+                    </ul>
                 </div>
             </section>
             <div class="side-btn" id="confirm">确定</div>
@@ -219,10 +227,35 @@
             });
             $('#confirm').on('click', function (){
                 hideSide();
-            })
+            });
             $('#productList li').on('click', function (){
                 window.location.href = 'detail.html';
             });
+
+            var bindSideTab = function ($target){
+                if (!$target){
+                    return;
+                }
+                $target.each(function (){
+                    var $this = $(this);
+                    var $header = $('.header', $this);
+                    var $content = $('.content', $this);
+                    var $icon = $('.ctrl-panel .glyphicon', $this);
+                    $header.off().on('click', function (){
+                        var $this = $(this);
+                        if ($this.hasClass('m-close')){ //open
+                            $content.stop().slideDown(300);
+                            $this.removeClass('m-close');
+                            $icon.removeClass('glyphicon-chevron-left').addClass('glyphicon-chevron-down');
+                        } else { //close
+                            $content.stop().slideUp(300);
+                            $this.addClass('m-close');
+                            $icon.removeClass('glyphicon-chevron-down').addClass('glyphicon-chevron-left');
+                        }
+                    });
+                });
+            }
+            bindSideTab($('#side .list-panel'));
         });
         </script>
     </body>
