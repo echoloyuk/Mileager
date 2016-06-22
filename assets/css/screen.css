@@ -6,6 +6,32 @@ body {
   color: #333;
 }
 @media screen and (max-width: 2048px) {
+  #mileagerMask {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 2000;
+    background-color: #000;
+    opacity: 0.6;
+    display: none;
+  }
+  #mileagerLoading {
+    position: fixed;
+    width: 100px;
+    height: 100px;
+    left: 50%;
+    top: 50%;
+    margin: -50px 0 0 -50px;
+    line-height: 100px;
+    background-color: #fff;
+    color: #333;
+    text-align: center;
+    z-index: 2001;
+    border-radius: 4px;
+    display: none;
+  }
   .mileager .mileager-header {
     position: fixed;
     width: 100%;

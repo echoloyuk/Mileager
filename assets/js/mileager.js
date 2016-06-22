@@ -21,6 +21,8 @@
         this.version = '0.9.0';
         this.option = option;
         this.$target = $target;
+        this.$mask = $('#mileagerMask');
+        this.$load = $('#mileagerLoading');
     }
 
     $.extend(Mileager.prototype, {
@@ -35,11 +37,14 @@
             var opt = this.option[id];
             var _this = this;
 
+            _this.showLoading();
+
             var onLoaded = function (data){
                 var source = $('#' + id).html();
                 var template = Handlebars.compile(source);
                 var html = template(data);
-                
+
+                _this.hideLoading();
                 _this.$target.empty().append(html);
 
                 if (typeof opt.onFinish === 'function'){
@@ -50,7 +55,15 @@
             //ajax here in the future;
             setTimeout(function (){
                 onLoaded({});
-            }, 1);
+            }, 1000);
+        },
+        showLoading: function (){
+            this.$mask.show();
+            this.$load.show();
+        },
+        hideLoading: function (){
+            this.$mask.hide();
+            this.$load.hide();
         }
     });
 
