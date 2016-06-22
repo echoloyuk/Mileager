@@ -1,16 +1,105 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="renderer" content="webkit">
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="renderer" content="webkit">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>航旅里程</title>
+<link href="assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="assets/css/screen.css" rel="stylesheet">
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="assets/js/handlebars.js"></script>
+<script src="assets/js/mileager.js"></script>
 
-        <title>航旅里程</title>
-        <link href="assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-        <link href="assets/css/screen.css" rel="stylesheet">
-    </head>
-    <body class="mileager page">
+<script type="text/javascript">
+$(function (){
+    var M = new window.Mileager($('#page'));
+    var opt = {
+        '_list': {
+            onFinish: function (){
+                $('#filterBtn').on('click', function (){
+                    var $this = $(this);
+                    var $f = $('#filter');
+                    if ($this.hasClass('focus')){
+                        $this.removeClass('focus');
+                        $f.hide();
+                    } else {
+                        $this.addClass('focus');
+                        $f.show();
+                    }
+                });
+
+                var showSide = function (){
+                    var $mask = $('#mask');
+                    var $side = $('#side');
+                    $mask.fadeIn(300);
+                    $side.addClass('show');
+                    $mask.off().on('click', function (){
+                        hideSide();
+                    });
+                }
+                var hideSide = function (){
+                    var $mask = $('#mask');
+                    var $side = $('#side');
+                    $mask.fadeOut(300);
+                    $side.removeClass('show');
+                    $mask.off();
+                }
+
+                $('#sideBtn').on('click', function (){
+                    showSide();
+                });
+                $('#confirm').on('click', function (){
+                    hideSide();
+                });
+                $('#productList li').on('click', function (){
+                    M.toPage('_detail');
+                });
+
+                var bindSideTab = function ($target){
+                    if (!$target){
+                        return;
+                    }
+                    $target.each(function (){
+                        var $this = $(this);
+                        var $header = $('.header', $this);
+                        var $content = $('.content', $this);
+                        var $icon = $('.ctrl-panel .glyphicon', $this);
+                        $header.off().on('click', function (){
+                            var $this = $(this);
+                            if ($this.hasClass('m-close')){ //open
+                                $content.stop().slideDown(300);
+                                $this.removeClass('m-close');
+                                $icon.removeClass('glyphicon-chevron-left').addClass('glyphicon-chevron-down');
+                            } else { //close
+                                $content.stop().slideUp(300);
+                                $this.addClass('m-close');
+                                $icon.removeClass('glyphicon-chevron-down').addClass('glyphicon-chevron-left');
+                            }
+                        });
+                    });
+                }
+                bindSideTab($('#side .list-panel'));
+            }
+        },
+        '_detail': {
+            onFinish: function (){
+                $('#back').on('click', function (){
+                    M.toPage('_list');
+                });
+            }
+        }
+    }
+    M.setOption(opt);
+    M.toPage('_list');
+});
+</script>
+</head>
+<body class="mileager page">
+    <div id="page"></div>
+    <script id="_list" type="text/x-handlebars-template">
         <main class="main-page">
             <section class="mileager-header">
                 <span class="title">
@@ -189,74 +278,51 @@
             <div class="side-btn" id="confirm">确定</div>
         </main>
         <div class="mask" id="mask"></div>
-        <script src="assets/js/jquery.min.js"></script>
-        <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-        <script>
-        $(function (){
-            $('#filterBtn').on('click', function (){
-                var $this = $(this);
-                var $f = $('#filter');
-                if ($this.hasClass('focus')){
-                    $this.removeClass('focus');
-                    $f.hide();
-                } else {
-                    $this.addClass('focus');
-                    $f.show();
-                }
-            });
+    </script>
+    <script id="_detail" type="text/x-handlebars-template">
+        <main class="main-page">
+            <section class="mileager-header detail">
+                <span class="title">里程商城</span>
+                <span class="header-btn left">
+                    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true" style="top:2px;" id="back"></span>
+                </span>
+            </section>
+            <section class="img-scroller">
+                <div class="inner">
+                    <img src="" alt="">
+                    <img src="" alt="">
+                    <img src="" alt="">
+                </div>
+                <div class="pt-panel">
+                    <div class="pt"></div>
+                    <div class="pt"></div>
+                    <div class="pt"></div>
+                </div>
+            </section>
+            <section class="detail-panel">
+                <div class="title">
+                    <span class="airline ca">国航知音</span>
+                    德国碧然德BRITA即热净水吧
+                </div>
+                <div class="content">
+                    <div class="mileage">38200<span class="unit">里程</span></div>
+                    <span class="acc">
+                        <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true" ></span>
+                        <span>12345</span>
+                    </span>
+                    <span class="acc">
+                        <span class="zhi">值</span>
+                        <span>12341</span>
+                    </span>
+                </div>
+            </section>
+            <section class="product-panel">
+                <img src="assets/images/7.jpg" alt="" class="product-img">
+            </section>
+        </main>
 
-            var showSide = function (){
-                var $mask = $('#mask');
-                var $side = $('#side');
-                $mask.fadeIn(300);
-                $side.addClass('show');
-                $mask.off().on('click', function (){
-                    hideSide();
-                });
-            }
-            var hideSide = function (){
-                var $mask = $('#mask');
-                var $side = $('#side');
-                $mask.fadeOut(300);
-                $side.removeClass('show');
-                $mask.off();
-            }
-
-            $('#sideBtn').on('click', function (){
-                showSide();
-            });
-            $('#confirm').on('click', function (){
-                hideSide();
-            });
-            $('#productList li').on('click', function (){
-                window.location.href = 'detail.html';
-            });
-
-            var bindSideTab = function ($target){
-                if (!$target){
-                    return;
-                }
-                $target.each(function (){
-                    var $this = $(this);
-                    var $header = $('.header', $this);
-                    var $content = $('.content', $this);
-                    var $icon = $('.ctrl-panel .glyphicon', $this);
-                    $header.off().on('click', function (){
-                        var $this = $(this);
-                        if ($this.hasClass('m-close')){ //open
-                            $content.stop().slideDown(300);
-                            $this.removeClass('m-close');
-                            $icon.removeClass('glyphicon-chevron-left').addClass('glyphicon-chevron-down');
-                        } else { //close
-                            $content.stop().slideUp(300);
-                            $this.addClass('m-close');
-                            $icon.removeClass('glyphicon-chevron-down').addClass('glyphicon-chevron-left');
-                        }
-                    });
-                });
-            }
-            bindSideTab($('#side .list-panel'));
-        });
-        </script>
-    </body>
+        <div class="mask" id="mask"></div>
+    </script>
+</body>
+    
 </html>
