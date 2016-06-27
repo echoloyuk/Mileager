@@ -1,75 +1,33 @@
-.panel{
-	
+.home-panel {
+  font-size: 16px;
 }
-.panel .panel-header{
-	width: auto;
-	height: auto;
-	background-color: #99CC99;
+.home-panel .panel-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 50px;
+  line-height: 50px;
+  background-color: #649e63;
 }
-.panel .panel-header .cycle{
-	width: 100px;
-	height: 100px;
-	background-color: #999;
-	border-radius: 50px;
-	position: relative;
-	top: 20%;
-	left: 50%;
+.home-panel .panel-header .section-input {
+  text-align: center;
+  height: 32px;
+  line-height: 32px;
+  margin-top: 9px;
 }
-.panel .section1{
-	border-bottom: 1px solid #ccc;
-
+.home-panel .panel-header .section-input > input {
+  width: 76%;
+  padding: 0 40px 0 16px;
+  margin: 0;
+  border: none;
+  height: 32px;
+  border-radius: 16px;
 }
-.panel .section1 .section-input{
-	padding: 20px;
-}
-.panel .section1 .choose-airline .china{
-
-}
-.panel .section1 .choose-airline .south{
-
-}
-.panel .section1 .container .airline-item{
-	text-align:center;
-	padding-bottom: 10px;
-}
-.panel .section1-color{
-	width: 40px;
-	height: 40px;
-	background-color: #ccc;
-	margin: 10px auto 10px;
-	padding: 30px;
-}
-.panel .section1-color.red{
-	background-color: #CCFFCC;
-}
-.panel .section1-color.blue{
-	background-color:#00f;
-}
-.panel .section2 .container .item{
-	text-align: bottom;
-}
-.panel .section2 .container .item .item-icon{
-	width:40px;
-	height:40px;
-}
-.panel .section2-color{
-	padding-top:10px;
-	width: 60px;
-	height: 60px;
-	margin: 10px auto 10px;
-	background-color: #CCCCCC;
-	padding: 5px;
-	text-align: bottom;
-	font-size: 5px;
-	line-height: 5px;
-}
-.panel .section2{
-	border-bottom: 1px solid #ccc;
-}
-.panel .footer-recommend{
-	border-bottom: 1px solid #ccc;
-	padding: 10px;
-}
-.panel .footer-recommend .more{
-	text-align: right;
+.home-panel .panel-header .section-input .search-btn {
+  width: 32px;
+  height: 32px;
+  background-color: #fff;
+  border: none;
+  float: right;
 }
