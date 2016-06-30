@@ -9,6 +9,7 @@
   height: 50px;
   line-height: 50px;
   background-color: #649e63;
+  z-index: 1000;
 }
 .home-panel .panel-header .section-input {
   text-align: center;
@@ -17,17 +18,93 @@
   margin-top: 9px;
 }
 .home-panel .panel-header .section-input > input {
-  width: 76%;
+  width: 86%;
   padding: 0 40px 0 16px;
   margin: 0;
   border: none;
   height: 32px;
   border-radius: 16px;
+  outline: none;
 }
 .home-panel .panel-header .section-input .search-btn {
   width: 32px;
   height: 32px;
-  background-color: #fff;
   border: none;
+  position: absolute;
+  right: 32px;
+  border-radius: 16px;
+  background-color: #fff;
+  top: 9px;
+  outline: none;
+  color: #649e63;
+}
+.home-panel .panel-main .section1 {
+  display: table;
+  width: 100%;
+  margin: 10px 0;
+  border-bottom: 1px solid #ccc;
+}
+.home-panel .panel-main .section1 .items {
+  display: table-cell;
+  text-align: center;
+  padding: 8px 0;
+}
+.home-panel .panel-main .section1 .items .items-icon {
+  background-color: #ccc;
+  display: inline-block;
+  border-radius: 30px;
+  width: 60px;
+  height: 60px;
+  position: relative;
+  background-color: #eee;
+}
+.home-panel .panel-main .section1 .items .items-icon img {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 40px;
+  height: 40px;
+  margin: -20px 0 0 -20px;
+}
+.home-panel .panel-main .section1 .items .name {
+  margin-top: 6px;
+}
+.home-panel .panel-main .section2 {
+  overflow: hidden;
+  margin: 10px 0;
+  padding-bottom: 10px;
+}
+.home-panel .panel-main .section2 .items {
+  float: left;
+  width: 25%;
+  box-sizing: border-box;
+  margin: 4px 0;
+  text-align: center;
+}
+.home-panel .panel-main .section2 .items .items-icon {
+  width: 72px;
+  height: 72px;
+  background-color: #649e63;
+  text-align: center;
+  display: inline-block;
+  border-radius: 6px;
+}
+.home-panel .panel-main .section2 .items .items-icon .icon {
+  font-size: 24px;
+  margin: 10px 0;
+  color: #fff;
+}
+.home-panel .panel-main .section2 .items .items-icon .name {
+  margin-top: 6px;
+  color: #fff;
+  font-size: 14px;
+}
+.home-panel .panel-foot > .title {
+  border-bottom: 1px solid #ccc;
+}
+.home-panel .panel-foot > .title .more-btn {
   float: right;
+  color: #333;
+  text-decoration: none;
+  outline: none;
 }
