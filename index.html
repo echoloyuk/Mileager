@@ -7,6 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <title>航旅里程</title>
 <link href="assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="assets/css/search.css">
 <link href="assets/css/screen.css" rel="stylesheet">
 <script src="assets/js/jquery.min.js"></script>
 <script src="assets/bootstrap/js/bootstrap.min.js"></script>
@@ -17,6 +18,16 @@
 $(function (){
     var M = new window.Mileager($('#page'));
     var opt = {
+        '_home': {
+            onFinish: function (){
+                $('#cate .items-icon').on('click', function (){
+                    M.toPage('_list');
+                });
+                $('#recommend .product-item').on('click', function (){
+                    M.toPage('_detail');
+                })
+            }
+        },
         '_list': {
             onFinish: function (){
                 $('#filterBtn').on('click', function (){
@@ -29,6 +40,9 @@ $(function (){
                         $this.addClass('focus');
                         $f.show();
                     }
+                });
+                $('#back').on('click', function (){
+                    M.toPage('_home');
                 });
 
                 var showSide = function (){
@@ -93,12 +107,192 @@ $(function (){
         }
     }
     M.setOption(opt);
-    M.toPage('_list');
+    M.toPage('_home');
 });
 </script>
 </head>
 <body class="mileager page">
     <div id="page"></div>
+    <script id="_home" type="text/x-handlebars-template">
+        <div class="home-panel">
+            <header class="panel-header">
+                <div class="section-input">
+                    <input type="text" placeholder="搜索">
+                    <button class="search-btn"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                </div>
+            </header>
+            <section class="panel-main">
+                <div class="section1">
+                    <div class="items">
+                        <div class="items-icon">
+                            <img src="assets/images/CA.png" alt="" class="icon">
+                        </div>
+                        <div class="name">国航商城</div>
+                    </div>
+                    <div class="items">
+                        <div class="items-icon">
+                            <img src="assets/images/CZ.png" alt="" class="icon">
+                        </div> 
+                        <div class="name">南航商城</div>
+                    </div>
+                    <div class="items">
+                        <div class="items-icon">
+                            <img src="assets/images/CK.png" alt="" class="icon">
+                        </div>
+                        <div class="name">东航商城</div>
+                    </div>
+                    <div class="items">
+                        <div class="items-icon">
+                            <img src="assets/images/3U.png" alt="" class="icon">
+                        </div>
+                        <div class="name">川航商城</div>
+                    </div>
+                </div>
+                <div class="section2" id="cate">
+                    <div class="items">
+                        <div class="items-icon">
+                            <div class="icon"><span class="glyphicon glyphicon-blackboard" aria-hidden="true"></span></div>
+                            <div class="name">家用电器</div>
+                        </div>
+                    </div>
+                    <div class="items">
+                        <div class="items-icon">
+                            <div class="icon"><span class="glyphicon glyphicon-phone" aria-hidden="true"></span></div>
+                            <div class="name">电子数码</div>
+                        </div> 
+                    </div>
+                    <div class="items">
+                        <div class="items-icon">
+                            <div class="icon"><span class="glyphicon glyphicon-tree-conifer" aria-hidden="true"></span></div>
+                            <div class="name">运动养生</div>
+                        </div>
+                    </div>
+                    <div class="items">
+                        <div class="items-icon">
+                            <div class="icon"><span class="glyphicon glyphicon-camera" aria-hidden="true"></span></div>
+                            <div class="name">生活电器</div>
+                        </div>
+                    </div>
+                    <div class="items">
+                        <div class="items-icon">
+                            <div class="icon"><span class="glyphicon glyphicon-road" aria-hidden="true"></span></div>
+                            <div class="name">汽车用品</div>
+                        </div>
+                    </div>
+                    <div class="items">
+                        <div class="items-icon">
+                            <div class="icon"><span class="glyphicon glyphicon-star" aria-hidden="true"></span></div>
+                            <div class="name">美妆</div>
+                        </div>
+                    </div>
+                    <div class="items">
+                        <div class="items-icon">
+                            <div class="icon"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span></div>
+                            <div class="name">生活服务</div>
+                        </div>
+                    </div>
+                    <div class="items">
+                        <div class="items-icon">
+                            <div class="icon"><span class="glyphicon glyphicon-plane" aria-hidden="true"></span></div>
+                            <div class="name">航空专属</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="panel-foot" id="recommend">
+                <div class="title">
+                    <span>推荐商品</span>
+                    <a href="" class="more-btn">更多...</a>
+                </div>
+                <div class="recommend-panel">
+                    <section class="mileager-main">
+                        <ul class="product-list" id="productList">
+                            <li>
+                                <a class="product-item">
+                                    <img src="assets/images/6.jpg" alt="">
+                                    <span class="tag-panel">
+                                        <span class="tag ca">凤凰知音</span>
+                                    </span>
+                                    <span class="title">德国碧然德BRITA即热净水吧</span>
+                                    <span class="mileage">
+                                        32800<span class="mileage-unit">里程</span>
+                                    </span>
+                                    <span class="other">
+                                        <span class="items">
+                                            <span class="items-btn"><span class="glyphicon glyphicon-heart" aria-hidden="true" ></span></span><span>12340</span>
+                                        </span>
+                                        <span class="items">
+                                            <span class="items-btn">值</span><span>12340</span>
+                                        </span>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="product-item">
+                                    <img src="assets/images/1.jpg" alt="">
+                                    <span class="tag-panel">
+                                        <span class="tag cz">南航明珠</span>
+                                    </span>
+                                    <span class="title">精品自拍杆，方便携带</span>
+                                    <span class="mileage">
+                                        1800<span class="mileage-unit">里程</span>
+                                    </span>
+                                    <span class="other">
+                                        <span class="items">
+                                            <span class="items-btn"><span class="glyphicon glyphicon-heart" aria-hidden="true" ></span></span><span>1340</span>
+                                        </span>
+                                        <span class="items">
+                                            <span class="items-btn">值</span><span>1230</span>
+                                        </span>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="product-item">
+                                    <img src="assets/images/3.jpg" alt="">
+                                    <span class="tag-panel">
+                                        <span class="tag cz">南航明珠</span>
+                                    </span>
+                                    <span class="title">德国进口自行车，26寸超轻。</span>
+                                    <span class="mileage">
+                                        88000<span class="mileage-unit">里程</span>
+                                    </span>
+                                    <span class="other">
+                                        <span class="items">
+                                            <span class="items-btn"><span class="glyphicon glyphicon-heart" aria-hidden="true" ></span></span><span>140</span>
+                                        </span>
+                                        <span class="items">
+                                            <span class="items-btn">值</span><span>340</span>
+                                        </span>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="product-item">
+                                    <img src="assets/images/3.jpg" alt="">
+                                    <span class="tag-panel">
+                                        <span class="tag cz">南航明珠</span>
+                                    </span>
+                                    <span class="title">德国进口自行车，26寸超轻。</span>
+                                    <span class="mileage">
+                                        88000<span class="mileage-unit">里程</span>
+                                    </span>
+                                    <span class="other">
+                                        <span class="items">
+                                            <span class="items-btn"><span class="glyphicon glyphicon-heart" aria-hidden="true" ></span></span><span>140</span>
+                                        </span>
+                                        <span class="items">
+                                            <span class="items-btn">值</span><span>340</span>
+                                        </span>
+                                    </span>
+                                </a>
+                            </li>
+                        </ul>
+                    </section>
+                </div>
+            </section>
+        </div>
+    </script>
     <script id="_list" type="text/x-handlebars-template">
         <main class="main-page">
             <section class="mileager-header">
@@ -117,7 +311,7 @@ $(function (){
                     <span class="glyphicon glyphicon-sort" aria-hidden="true" style="top:2px;"></span>
                 </span>
                 <span class="header-btn left">
-                    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true" style="top:2px;"></span>
+                    <span id="back" class="glyphicon glyphicon-chevron-left" aria-hidden="true" style="top:2px;"></span>
                 </span>
             </section>
             <section class="mileager-filter" id="filter">
