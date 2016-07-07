@@ -19,6 +19,12 @@ $(function (){
     var M = new window.Mileager($('#page'));
     var opt = {
         '_home': {
+            url: 'http://127.0.0.1:808/Mileager/temp/test.js',
+            onBeforeLoad: function (){
+                return {
+                    productId:111
+                }
+            },
             onFinish: function (){
                 $('#cate .items-icon').on('click', function (){
                     M.toPage('_list');
@@ -127,7 +133,7 @@ $(function (){
                         <div class="items-icon">
                             <img src="assets/images/CA.png" alt="" class="icon">
                         </div>
-                        <div class="name">国航商城</div>
+                        <div class="name">{{title}}</div>
                     </div>
                     <div class="items">
                         <div class="items-icon">

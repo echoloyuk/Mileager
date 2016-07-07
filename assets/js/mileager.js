@@ -36,6 +36,8 @@
             }
             var opt = this.option[id];
             var _this = this;
+            var url = opt.url;
+            var data = opt.data;
 
             _this.showLoading();
 
@@ -53,9 +55,32 @@
             }
 
             //ajax here in the future;
-            setTimeout(function (){
-                onLoaded({});
-            }, 1000);
+            console.log(opt.url);
+            if (url){
+                if (typeof opt.onBeforeLoad === 'function'){
+                    data = opt.onBeforeLoad.call(_this, data);
+                }
+                $.ajax({
+                    url: url,
+                    type: opt.method || 'get',
+                    data: data,
+                    success: function (res){
+                        res = eval('(' + res + ')');
+                        if (typeof opt.onAfterLoad === 'function'){
+                            res = opt.onAfterLoad.call(_this, res);
+                        }
+                        onLoaded(res);
+                    },
+                    complete: function (){
+
+                    },
+                    error: function (err){
+                        console.log('error');
+                    }
+                });
+            } else {
+                onLoaded({}); 
+            }
         },
         showLoading: function (){
             this.$mask.show();
