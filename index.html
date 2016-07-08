@@ -19,11 +19,9 @@ $(function (){
     var M = new window.Mileager($('#page'));
     var opt = {
         '_home': {
-            url: 'http://127.0.0.1:808/Mileager/temp/test.js',
-            onBeforeLoad: function (){
-                return {
-                    productId:111
-                }
+            url: 'http://127.0.0.1:808/Mileager/temp/GetAllHotCommodity.php',
+            onBeforeLoad: function (data){
+                return data;
             },
             onFinish: function (){
                 $('#cate .items-icon').on('click', function (){
@@ -133,12 +131,12 @@ $(function (){
                         <div class="items-icon">
                             <img src="assets/images/CA.png" alt="" class="icon">
                         </div>
-                        <div class="name">{{title}}</div>
+                        <div class="name">国航商城</div>
                     </div>
                     <div class="items">
                         <div class="items-icon">
                             <img src="assets/images/CZ.png" alt="" class="icon">
-                        </div> 
+                        </div>
                         <div class="name">南航商城</div>
                     </div>
                     <div class="items">
@@ -165,7 +163,7 @@ $(function (){
                         <div class="items-icon">
                             <div class="icon"><span class="glyphicon glyphicon-phone" aria-hidden="true"></span></div>
                             <div class="name">电子数码</div>
-                        </div> 
+                        </div>
                     </div>
                     <div class="items">
                         <div class="items-icon">
@@ -213,86 +211,28 @@ $(function (){
                 <div class="recommend-panel">
                     <section class="mileager-main">
                         <ul class="product-list" id="productList">
+                            {{#each commodityItem}}
                             <li>
                                 <a class="product-item">
-                                    <img src="assets/images/6.jpg" alt="">
+                                    <img src="{{commodity_default_url}}" alt="">
                                     <span class="tag-panel">
                                         <span class="tag ca">凤凰知音</span>
                                     </span>
-                                    <span class="title">德国碧然德BRITA即热净水吧</span>
+                                    <span class="title">{{commodity_name}}</span>
                                     <span class="mileage">
-                                        32800<span class="mileage-unit">里程</span>
+                                        {{commodity_mile}}<span class="mileage-unit">里程</span>
                                     </span>
                                     <span class="other">
                                         <span class="items">
-                                            <span class="items-btn"><span class="glyphicon glyphicon-heart" aria-hidden="true" ></span></span><span>12340</span>
+                                            <span class="items-btn"><span class="glyphicon glyphicon-heart" aria-hidden="true" ></span></span><span>{{commodity_collection}}</span>
                                         </span>
                                         <span class="items">
-                                            <span class="items-btn">值</span><span>12340</span>
+                                            <span class="items-btn">值</span><span>{{commodity_values}}</span>
                                         </span>
                                     </span>
                                 </a>
                             </li>
-                            <li>
-                                <a class="product-item">
-                                    <img src="assets/images/1.jpg" alt="">
-                                    <span class="tag-panel">
-                                        <span class="tag cz">南航明珠</span>
-                                    </span>
-                                    <span class="title">精品自拍杆，方便携带</span>
-                                    <span class="mileage">
-                                        1800<span class="mileage-unit">里程</span>
-                                    </span>
-                                    <span class="other">
-                                        <span class="items">
-                                            <span class="items-btn"><span class="glyphicon glyphicon-heart" aria-hidden="true" ></span></span><span>1340</span>
-                                        </span>
-                                        <span class="items">
-                                            <span class="items-btn">值</span><span>1230</span>
-                                        </span>
-                                    </span>
-                                </a>
-                            </li>
-                            <li>
-                                <a class="product-item">
-                                    <img src="assets/images/3.jpg" alt="">
-                                    <span class="tag-panel">
-                                        <span class="tag cz">南航明珠</span>
-                                    </span>
-                                    <span class="title">德国进口自行车，26寸超轻。</span>
-                                    <span class="mileage">
-                                        88000<span class="mileage-unit">里程</span>
-                                    </span>
-                                    <span class="other">
-                                        <span class="items">
-                                            <span class="items-btn"><span class="glyphicon glyphicon-heart" aria-hidden="true" ></span></span><span>140</span>
-                                        </span>
-                                        <span class="items">
-                                            <span class="items-btn">值</span><span>340</span>
-                                        </span>
-                                    </span>
-                                </a>
-                            </li>
-                            <li>
-                                <a class="product-item">
-                                    <img src="assets/images/3.jpg" alt="">
-                                    <span class="tag-panel">
-                                        <span class="tag cz">南航明珠</span>
-                                    </span>
-                                    <span class="title">德国进口自行车，26寸超轻。</span>
-                                    <span class="mileage">
-                                        88000<span class="mileage-unit">里程</span>
-                                    </span>
-                                    <span class="other">
-                                        <span class="items">
-                                            <span class="items-btn"><span class="glyphicon glyphicon-heart" aria-hidden="true" ></span></span><span>140</span>
-                                        </span>
-                                        <span class="items">
-                                            <span class="items-btn">值</span><span>340</span>
-                                        </span>
-                                    </span>
-                                </a>
-                            </li>
+                            {{/each}}
                         </ul>
                     </section>
                 </div>
