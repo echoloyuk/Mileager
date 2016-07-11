@@ -29,7 +29,7 @@
         setOption: function (obj){
             $.extend(true, this.option, obj);
         },
-        toPage: function (id){
+        toPage: function (id, _data){
             if (!this.option[id]){
                 console.error('id is not exist');
                 return;
@@ -37,7 +37,7 @@
             var opt = this.option[id];
             var _this = this;
             var url = opt.url;
-            var data = opt.data;
+            var data = $.extend({}, opt.data);
 
             _this.showLoading();
 
@@ -55,11 +55,12 @@
             }
 
             //ajax here in the future;
-            console.log(opt.url);
             if (url){
+                data = $.extend(data, _data);
                 if (typeof opt.onBeforeLoad === 'function'){
                     data = opt.onBeforeLoad.call(_this, data);
                 }
+                console.log(data);
                 $.ajax({
                     url: url,
                     type: opt.method || 'get',
@@ -67,7 +68,7 @@
                     success: function (res){
                         res = eval('(' + res + ')');
                         if (typeof opt.onAfterLoad === 'function'){
-                            res = opt.onAfterLoad.call(_this, res);
+                            opt.onAfterLoad.call(_this, res);
                         }
                         onLoaded(res);
                     },
@@ -80,6 +81,57 @@
                 });
             } else {
                 onLoaded({}); 
+            }
+        },
+
+        /**
+        obj = {
+            id:'',
+            url:'',
+            data: {},
+            onAfterLoad: function (data){return data;},
+            onFinish: function (html){},
+            method:'get',
+            isShowLoading: false
+        }
+        */
+        getHTML: function (obj){
+            var url = obj.url;
+            var data = obj.data;
+            var _this = this;
+
+            if (url){
+                if (obj.isShowLoading){
+                    _this.showLoading();
+                }
+                $.ajax({
+                    url: url,
+                    type: obj.method || 'get',
+                    data: data,
+                    success: function (res){
+                        res = eval('(' + res + ')');
+                        if (typeof obj.onAfterLoad === 'function'){
+                            obj.onAfterLoad.call(_this, res);
+                        }
+                        var source = $('#' + obj.id).html();
+                        var template = Handlebars.compile(source);
+                        var html = template(res);
+                        _this.hideLoading();
+
+                        if (typeof obj.onFinish === 'function'){
+                            console.log(222);
+                            obj.onFinish.call(_this, html);
+                        }
+                    },
+                    complete: function (){
+
+                    },
+                    error: function (err){
+                        console.log(err);
+                    }
+                });
+            } else {
+                return;
             }
         },
         showLoading: function (){

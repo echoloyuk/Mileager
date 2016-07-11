@@ -15,25 +15,70 @@
 <script src="assets/js/mileager.js"></script>
 
 <script type="text/javascript">
+var G = window.G || {
+    keywords:null,
+    cid:null
+}
+G.reset = function (){
+    this.keywords = null;
+    this.cid = null;
+};
+var CA_CAT = {
+    'jd': [12], //家用电器
+    'sm': [25], //数码用品
+    'ys': [27, 15], //运动养生
+    'ms': [13, 26], //美食美酒
+    'jj': [3], //家具母婴
+    'qc': [22, 17], //汽车用品
+    'fw': [16, 29, 28], //服务娱乐
+    'xb': [], //箱包奢侈品 
+    'hh': [30], //航空专属 
+    'qt': [4, 33, 14, 23] //其他
+}
 $(function (){
     var M = new window.Mileager($('#page'));
     var opt = {
         '_home': {
-            url: 'http://127.0.0.1:808/Mileager/temp/GetAllHotCommodity.php',
+            url: 'http://127.0.0.1:3000/commodity/GetAllHotCommodity',
             onBeforeLoad: function (data){
                 return data;
             },
             onFinish: function (){
+                G.reset();
+                $(document).off('.mileager').scrollTop(0);
+                $('#searchBtn').on('click', function (){
+                    var val = $('#search').val();
+                    if (val){
+                        G.keywords = val;
+                        M.toPage('_list', {keywords: val});
+                    } else {
+                        G.keywords = null;
+                        M.toPage('_list');
+                    }
+                });
+
                 $('#cate .items-icon').on('click', function (){
-                    M.toPage('_list');
+                    var $this = $(this);
+                    var t = $this.attr('data-t');
+                    var cid = CA_CAT[t];
+                    cid = cid.join(',');
+                    G.cid = cid;
+                    M.toPage('_list', {cid: cid});
+                    //console.log(cate);
+                    //M.toPage('_list');
                 });
                 $('#recommend .product-item').on('click', function (){
-                    M.toPage('_detail');
-                })
+                    //M.toPage('_detail');
+                });
             }
         },
         '_list': {
+            url: 'http://127.0.0.1:3000/commodity/GetAllCommodity',
+            data: {
+                Page_num: 1
+            },
             onFinish: function (){
+                /*
                 $('#filterBtn').on('click', function (){
                     var $this = $(this);
                     var $f = $('#filter');
@@ -44,7 +89,7 @@ $(function (){
                         $this.addClass('focus');
                         $f.show();
                     }
-                });
+                });*/
                 $('#back').on('click', function (){
                     M.toPage('_home');
                 });
@@ -73,7 +118,7 @@ $(function (){
                     hideSide();
                 });
                 $('#productList li').on('click', function (){
-                    M.toPage('_detail');
+                    //M.toPage('_detail');
                 });
 
                 var bindSideTab = function ($target){
@@ -100,6 +145,39 @@ $(function (){
                     });
                 }
                 bindSideTab($('#side .list-panel'));
+
+                //绑定滑动事件，延迟加载
+                var _p = 1;
+                var _flag = false;
+                var $win = $(window),
+                    $doc = $(document);
+
+                $doc.off('.mileager').on('scroll.mileager', function (){
+                    if (_flag){
+                        return;
+                    }
+                    if ($doc.height() - ($win.height() + $doc.scrollTop()) < 100){
+                        _flag = true;
+                        _p++;
+                        
+                        M.getHTML({
+                            id: '_listPage',
+                            url: 'http://127.0.0.1:3000/commodity/GetAllCommodity',
+                            data: {
+                                Page_num: _p,
+                                keywords: G.keywords,
+                                cid: G.cid
+                            },
+                            onFinish: function (html){
+                                $('#productList').append(html);
+                                if ($.trim(html)){
+                                    _flag = false;
+                                }
+                            }
+                        });
+                    }
+                });
+
             }
         },
         '_detail': {
@@ -121,8 +199,8 @@ $(function (){
         <div class="home-panel">
             <header class="panel-header">
                 <div class="section-input">
-                    <input type="text" placeholder="搜索">
-                    <button class="search-btn"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                    <input type="text" id="search" name="search" placeholder="搜索">
+                    <button class="search-btn" id="searchBtn"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
                 </div>
             </header>
             <section class="panel-main">
@@ -154,49 +232,49 @@ $(function (){
                 </div>
                 <div class="section2" id="cate">
                     <div class="items">
-                        <div class="items-icon">
+                        <div class="items-icon" data-t="jd">
                             <div class="icon"><span class="glyphicon glyphicon-blackboard" aria-hidden="true"></span></div>
                             <div class="name">家用电器</div>
                         </div>
                     </div>
                     <div class="items">
-                        <div class="items-icon">
+                        <div class="items-icon" data-t="sm">
                             <div class="icon"><span class="glyphicon glyphicon-phone" aria-hidden="true"></span></div>
                             <div class="name">电子数码</div>
                         </div>
                     </div>
                     <div class="items">
-                        <div class="items-icon">
+                        <div class="items-icon" data-t="ys">
                             <div class="icon"><span class="glyphicon glyphicon-tree-conifer" aria-hidden="true"></span></div>
                             <div class="name">运动养生</div>
                         </div>
                     </div>
                     <div class="items">
-                        <div class="items-icon">
+                        <div class="items-icon" data-t="ms">
                             <div class="icon"><span class="glyphicon glyphicon-camera" aria-hidden="true"></span></div>
-                            <div class="name">生活电器</div>
+                            <div class="name">美食美酒</div>
                         </div>
                     </div>
                     <div class="items">
-                        <div class="items-icon">
+                        <div class="items-icon" data-t="qc">
                             <div class="icon"><span class="glyphicon glyphicon-road" aria-hidden="true"></span></div>
                             <div class="name">汽车用品</div>
                         </div>
                     </div>
                     <div class="items">
-                        <div class="items-icon">
+                        <div class="items-icon" data-t="jj">
                             <div class="icon"><span class="glyphicon glyphicon-star" aria-hidden="true"></span></div>
-                            <div class="name">美妆</div>
+                            <div class="name">家居</div>
                         </div>
                     </div>
                     <div class="items">
-                        <div class="items-icon">
+                        <div class="items-icon" data-t="fw">
                             <div class="icon"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span></div>
                             <div class="name">生活服务</div>
                         </div>
                     </div>
                     <div class="items">
-                        <div class="items-icon">
+                        <div class="items-icon" data-t="hh">
                             <div class="icon"><span class="glyphicon glyphicon-plane" aria-hidden="true"></span></div>
                             <div class="name">航空专属</div>
                         </div>
@@ -212,11 +290,11 @@ $(function (){
                     <section class="mileager-main">
                         <ul class="product-list" id="productList">
                             {{#each commodityItem}}
-                            <li>
+                            <li data-id="{{commodity_id}}">
                                 <a class="product-item">
-                                    <img src="{{commodity_default_url}}" alt="">
+                                    <img src="{{commodity_content_pic}}" alt="">
                                     <span class="tag-panel">
-                                        <span class="tag ca">凤凰知音</span>
+                                        <span class="tag ca">{{company_name}}</span>
                                     </span>
                                     <span class="title">{{commodity_name}}</span>
                                     <span class="mileage">
@@ -275,86 +353,28 @@ $(function (){
             </section>
             <section class="mileager-main">
                 <ul class="product-list" id="productList">
+                    {{#each commodityItem}}
                     <li>
                         <a class="product-item">
-                            <img src="assets/images/6.jpg" alt="">
+                            <img src="{{commodity_content_pic}}" alt="">
                             <span class="tag-panel">
-                                <span class="tag ca">凤凰知音</span>
+                                <span class="tag ca">{{company_name}}</span>
                             </span>
-                            <span class="title">德国碧然德BRITA即热净水吧</span>
+                            <span class="title">{{commodity_name}}</span>
                             <span class="mileage">
-                                32800<span class="mileage-unit">里程</span>
+                                {{commodity_mile}}<span class="mileage-unit">里程</span>
                             </span>
                             <span class="other">
                                 <span class="items">
-                                    <span class="items-btn"><span class="glyphicon glyphicon-heart" aria-hidden="true" ></span></span><span>12340</span>
+                                    <span class="items-btn"><span class="glyphicon glyphicon-heart" aria-hidden="true" ></span></span><span>{{commodity_collection}}</span>
                                 </span>
                                 <span class="items">
-                                    <span class="items-btn">值</span><span>12340</span>
+                                    <span class="items-btn">值</span><span>{{commodity_values}}</span>
                                 </span>
                             </span>
                         </a>
                     </li>
-                    <li>
-                        <a class="product-item">
-                            <img src="assets/images/1.jpg" alt="">
-                            <span class="tag-panel">
-                                <span class="tag cz">南航明珠</span>
-                            </span>
-                            <span class="title">精品自拍杆，方便携带</span>
-                            <span class="mileage">
-                                1800<span class="mileage-unit">里程</span>
-                            </span>
-                            <span class="other">
-                                <span class="items">
-                                    <span class="items-btn"><span class="glyphicon glyphicon-heart" aria-hidden="true" ></span></span><span>1340</span>
-                                </span>
-                                <span class="items">
-                                    <span class="items-btn">值</span><span>1230</span>
-                                </span>
-                            </span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="product-item">
-                            <img src="assets/images/3.jpg" alt="">
-                            <span class="tag-panel">
-                                <span class="tag cz">南航明珠</span>
-                            </span>
-                            <span class="title">德国进口自行车，26寸超轻。</span>
-                            <span class="mileage">
-                                88000<span class="mileage-unit">里程</span>
-                            </span>
-                            <span class="other">
-                                <span class="items">
-                                    <span class="items-btn"><span class="glyphicon glyphicon-heart" aria-hidden="true" ></span></span><span>140</span>
-                                </span>
-                                <span class="items">
-                                    <span class="items-btn">值</span><span>340</span>
-                                </span>
-                            </span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="product-item">
-                            <img src="assets/images/1.jpg" alt="">
-                            <span class="tag-panel">
-                                <span class="tag ca">凤凰知音</span>
-                            </span>
-                            <span class="title">精品自拍杆，方便携带</span>
-                            <span class="mileage">
-                                1800<span class="mileage-unit">里程</span>
-                            </span>
-                            <span class="other">
-                                <span class="items">
-                                    <span class="items-btn"><span class="glyphicon glyphicon-heart" aria-hidden="true" ></span></span><span>1340</span>
-                                </span>
-                                <span class="items">
-                                    <span class="items-btn">值</span><span>1230</span>
-                                </span>
-                            </span>
-                        </a>
-                    </li>
+                    {{/each}}
                 </ul>
             </section>
         </main>
@@ -369,10 +389,6 @@ $(function (){
                 <div class="content">
                     <ul class="select-panel">
                         <li>中国航空</li>
-                        <li>南方航空</li>
-                        <li>东方航空</li>
-                        <li>四川航空</li>
-                        <li>山东航空</li>
                     </ul>
                 </div>
             </section>
@@ -385,12 +401,14 @@ $(function (){
                 </div>
                 <div class="content">
                     <ul class="select-panel">
-                        <li>电子数码</li>
-                        <li>家用电器</li>
-                        <li>家具</li>
-                        <li>汽车用品</li>
-                        <li>户外运动</li>
-                        <li>出行装备</li>
+                        <li data-t="jd">家用电器</li>
+                        <li data-t="sm">电子数码</li>
+                        <li data-t="ys">运动养生</li>
+                        <li data-t="ms">美食美酒</li>
+                        <li data-t="qc">汽车用品</li>
+                        <li data-t="jj">家居</li>
+                        <li data-t="fw">生活服务</li>
+                        <li data-t="hh">航空专属</li>
                     </ul>
                 </div>
             </section>
@@ -418,6 +436,30 @@ $(function (){
             <div class="side-btn" id="confirm">确定</div>
         </main>
         <div class="mask" id="mask"></div>
+    </script>
+    <script id="_listPage" type="text/x-handlebars-template">
+        {{#each commodityItem}}
+        <li>
+            <a class="product-item">
+                <img src="{{commodity_content_pic}}" alt="">
+                <span class="tag-panel">
+                    <span class="tag ca">{{company_name}}</span>
+                </span>
+                <span class="title">{{commodity_name}}</span>
+                <span class="mileage">
+                    {{commodity_mile}}<span class="mileage-unit">里程</span>
+                </span>
+                <span class="other">
+                    <span class="items">
+                        <span class="items-btn"><span class="glyphicon glyphicon-heart" aria-hidden="true" ></span></span><span>{{commodity_collection}}</span>
+                    </span>
+                    <span class="items">
+                        <span class="items-btn">值</span><span>{{commodity_values}}</span>
+                    </span>
+                </span>
+            </a>
+        </li>
+        {{/each}}
     </script>
     <script id="_detail" type="text/x-handlebars-template">
         <main class="main-page">
