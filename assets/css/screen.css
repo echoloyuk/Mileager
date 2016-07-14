@@ -313,6 +313,14 @@ body {
     text-align: center;
     box-sizing: content-box;
   }
+  .mileager ul.select-panel li.selected {
+    background-color: #649e63;
+    color: #fff;
+  }
+  .mileager ul.select-panel li.disabled {
+    background-color: #ccc;
+    color: #aaa;
+  }
   .mileager ul.select-panel.narrow li {
     width: 25%;
   }

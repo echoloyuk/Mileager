@@ -60,7 +60,6 @@
                 if (typeof opt.onBeforeLoad === 'function'){
                     data = opt.onBeforeLoad.call(_this, data);
                 }
-                console.log(data);
                 $.ajax({
                     url: url,
                     type: opt.method || 'get',
@@ -116,12 +115,11 @@
                         var source = $('#' + obj.id).html();
                         var template = Handlebars.compile(source);
                         var html = template(res);
-                        _this.hideLoading();
 
                         if (typeof obj.onFinish === 'function'){
-                            console.log(222);
                             obj.onFinish.call(_this, html);
                         }
+                        _this.hideLoading();
                     },
                     complete: function (){
 

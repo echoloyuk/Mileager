@@ -17,11 +17,17 @@
 <script type="text/javascript">
 var G = window.G || {
     keywords:null,
-    cid:null
+    cid:null,
+    cate:[],
+    max:null,
+    min:null
 }
 G.reset = function (){
     this.keywords = null;
     this.cid = null;
+    this.cate = [];
+    this.max = null,
+    this.min = null;
 };
 var CA_CAT = {
     'jd': [12], //家用电器
@@ -50,7 +56,7 @@ $(function (){
                     var val = $('#search').val();
                     if (val){
                         G.keywords = val;
-                        M.toPage('_list', {keywords: val});
+                        M.toPage('_list');
                     } else {
                         G.keywords = null;
                         M.toPage('_list');
@@ -63,7 +69,8 @@ $(function (){
                     var cid = CA_CAT[t];
                     cid = cid.join(',');
                     G.cid = cid;
-                    M.toPage('_list', {cid: cid});
+                    G.cate.push(t);
+                    M.toPage('_list', {cid:$.trim(cid)});
                     //console.log(cate);
                     //M.toPage('_list');
                 });
@@ -74,11 +81,59 @@ $(function (){
         },
         '_list': {
             url: 'http://127.0.0.1:3000/commodity/GetAllCommodity',
-            data: {
-                Page_num: 1
+            onBeforeLoad: function (){
+                console.log(window.G);
+                return {
+                    Page_num: 1,
+                    keywords: G.keywords,
+                    cid: G.cid,
+                    min: G.min,
+                    max: G.max
+                }
             },
             onFinish: function (){
-                /*
+                var _p = 1; //page
+
+                $('#searchBtn').on('click', function (){
+                    var val = $('#searchInput').val();
+                    if (val){
+                        G.keywords = val;
+                        _p = 1;
+
+                        M.getHTML({
+                            id: '_listPage',
+                            isShowLoading:true,
+                            url:'http://127.0.0.1:3000/commodity/GetAllCommodity',
+                            data:{
+                                keywords:G.keywords,
+                                Page_num:_p,
+                                cid: G.cid
+                            },
+                            onFinish: function (html){
+                                $(document).scrollTop(0);
+                                $('#productList').html('').append(html);
+                            }
+                        });
+                    }
+                });
+                $('#cate li').on('click', function(){
+                    var $this = $(this);
+                    if ($this.hasClass('selected')){
+                        $this.removeClass('selected');
+                    } else {
+                        $this.addClass('selected');
+                    }
+                });
+                $('#rangeBtn li').on('click', function (){
+                    $('#rangeBtn li').removeClass('selected');
+                    var $this = $(this);
+                    $this.addClass('selected');
+                    var min = $this.attr('data-m-min');
+                    var max = $this.attr('data-m-max');
+                    $('#rangeMin').val(min);
+                    $('#rangeMax').val(max);
+                });
+
                 $('#filterBtn').on('click', function (){
                     var $this = $(this);
                     var $f = $('#filter');
@@ -89,7 +144,7 @@ $(function (){
                         $this.addClass('focus');
                         $f.show();
                     }
-                });*/
+                });
                 $('#back').on('click', function (){
                     M.toPage('_home');
                 });
@@ -112,10 +167,63 @@ $(function (){
                 }
 
                 $('#sideBtn').on('click', function (){
+                    $('#cate li').removeClass('selected');
+                    for (var i = 0, count = G.cate.length; i < count; i++){
+                        $('#cate li[data-t="' + G.cate[i] + '"]').addClass('selected');
+                    }
                     showSide();
                 });
                 $('#confirm').on('click', function (){
+                    var $selected = $('#cate li.selected');
+                    var temp = [];
+                    var str = '';
+                    var min = $('#rangeMin').val();
+                    var max = $('#rangeMax').val();
+
+                    if (!$selected.length){
+                        return;
+                    }
+                    if (min){
+                        G.min = min;
+                    }
+                    if (max){
+                        G.max = max;
+                    }
+
+                    G.cate = [];
+                    $selected.map(function (){
+                        var $this = $(this);
+                        var key = $this.attr('data-t');
+                        G.cate.push(key);
+                        key = CA_CAT[key];
+                        key = key.join(',');
+                        if (!str){
+                            str = key;
+                        } else {
+                            str += ',' + key;
+                        }
+                    });
+                    G.cid = str;
                     hideSide();
+
+                    _p = 1;
+                    M.getHTML({
+                        id: '_listPage',
+                        isShowLoading:true,
+                        url:'http://127.0.0.1:3000/commodity/GetAllCommodity',
+                        data:{
+                            keywords:G.keywords,
+                            Page_num:_p,
+                            cid: str,
+                            min: G.min,
+                            max: G.max
+                        },
+                        onFinish: function (html){
+                            $(document).scrollTop(0);
+                            $('#productList').html('').append(html);
+                            console.log(html);
+                        }
+                    });
                 });
                 $('#productList li').on('click', function (){
                     //M.toPage('_detail');
@@ -147,7 +255,7 @@ $(function (){
                 bindSideTab($('#side .list-panel'));
 
                 //绑定滑动事件，延迟加载
-                var _p = 1;
+                
                 var _flag = false;
                 var $win = $(window),
                     $doc = $(document);
@@ -166,12 +274,16 @@ $(function (){
                             data: {
                                 Page_num: _p,
                                 keywords: G.keywords,
-                                cid: G.cid
+                                cid: G.cid,
+                                min: G.min,
+                                max: G.max
                             },
                             onFinish: function (html){
                                 $('#productList').append(html);
                                 if ($.trim(html)){
                                     _flag = false;
+                                } else {
+                                    _flag = true;
                                 }
                             }
                         });
@@ -322,8 +434,8 @@ $(function (){
             <section class="mileager-header">
                 <span class="title">
                     <div class="search-panel">
-                        <input type="text" class="search-input" placeholder="商品/航空公司/...">
-                        <div class="search-btn">
+                        <input type="text" class="search-input" placeholder="商品..." id="searchInput">
+                        <div class="search-btn" id="searchBtn">
                             <span class="glyphicon glyphicon-search" aria-hidden="true" style="top:3px"></span>
                         </div>
                     </div>
@@ -388,7 +500,7 @@ $(function (){
                 </div>
                 <div class="content">
                     <ul class="select-panel">
-                        <li>中国航空</li>
+                        <li class="selected">中国航空</li>
                     </ul>
                 </div>
             </section>
@@ -400,7 +512,7 @@ $(function (){
                     </div>
                 </div>
                 <div class="content">
-                    <ul class="select-panel">
+                    <ul class="select-panel" id='cate'>
                         <li data-t="jd">家用电器</li>
                         <li data-t="sm">电子数码</li>
                         <li data-t="ys">运动养生</li>
@@ -420,16 +532,17 @@ $(function (){
                     </div>
                 </div>
                 <div class="content">
-                    <input type="number" class="content-input" placeholder="0" style="width:80px;">
+                    <input type="number" id="rangeMin" class="content-input" placeholder="0" style="width:80px;">
                     <span>-</span>
-                    <input type="number" class="content-input" placeholder="10000" style="width:80px;">
+                    <input type="number" id="rangeMax" class="content-input" placeholder="10000" style="width:80px;">
                     
-                    <ul class="select-panel narrow" style="margin-top:10px">
-                        <li>1-5k</li>
-                        <li>5k-1w</li>
-                        <li>1w-2w</li>
-                        <li>2w-3w</li>
-                        <li>3w-5w</li>
+                    <ul class="select-panel narrow" style="margin-top:10px" id="rangeBtn">
+                        <li data-m-min="" data-m-max="">不限</li>
+                        <li data-m-min="1" data-m-max="5000">1-5k</li>
+                        <li data-m-min="5000" data-m-max="10000">5k-1w</li>
+                        <li data-m-min="10000" data-m-max="20000">1w-2w</li>
+                        <li data-m-min="20000" data-m-max="30000">2w-3w</li>
+                        <li data-m-min="30000" data-m-max="50000">3w-5w</li>
                     </ul>
                 </div>
             </section>

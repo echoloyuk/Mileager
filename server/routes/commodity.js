@@ -13,12 +13,14 @@ _ca.ProductsAllInfo.map(function (item, index){
         company_id: 1,
         company_name: '凤凰知音',
         commodity_content_pic: item.Pic_url,
-        commodity_mile: item.Price,
+        commodity_mile: parseInt(item.Price),
         commodity_values: Math.floor(Math.random() * 10000),
         commodity_collection: Math.floor(Math.random() * 5000),
         cid : parseInt(item.Cid)
     });
 });
+
+console.log('CA products total counts: ' + data.length);
 
 commodity.use(function (req, res, next){
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With, identifyCode');
@@ -58,6 +60,8 @@ commodity.get('/GetAllCommodity', function (req, res, next){
     var countPerPage = 10;
     var result = [];
     var cid = req.query.cid || null;
+    var min = req.query.min || 0;
+    var max = req.query.max || 10000000; //一般不会超过1千万了吧
 
     if (!page || page < 1){
         page = 1;
@@ -67,6 +71,10 @@ commodity.get('/GetAllCommodity', function (req, res, next){
     if (key){
         data.map(function (item, index){
             if (item.commodity_name.indexOf(key) > -1){
+                result.push(item);
+            } else if (item.commodity_name.indexOf(key.toUpperCase()) > -1){
+                result.push(item);
+            } else if (item.commodity_name.indexOf(key.toLowerCase()) > -1){
                 result.push(item);
             }
         });
@@ -87,11 +95,18 @@ commodity.get('/GetAllCommodity', function (req, res, next){
             });
         });
     }
-    console.log(result.length);
 
+    //min and max
+    var _temp = result.slice(0);
+    result = [];
+    _temp.map(function (item, index){
+        if (item.commodity_mile > min && item.commodity_mile < max){
+            result.push(item);
+        }
+    });
+
+    console.log('search: key=' + key + ', category=' + cid + ', min=' + min + ', max=' + max + '. has ' + result.length + ' result. page = ' + page);
     result = result.slice((page - 1) * countPerPage, page * countPerPage);
-
-    console.log(page + '   ' + result.length);
     res.send(JSON.stringify({
         commodityItem:result
     }));
