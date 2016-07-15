@@ -1,6 +1,8 @@
 var express = require('express');
 var commodity = express.Router();
 
+var http = require('http');
+
 /* load commodity with ca */
 var _ca = require('../data/ca-data');
 var data = [];
@@ -62,6 +64,8 @@ commodity.get('/GetAllCommodity', function (req, res, next){
     var cid = req.query.cid || null;
     var min = req.query.min || 0;
     var max = req.query.max || 10000000; //一般不会超过1千万了吧
+    var order = req.query.order || null;
+    var turn = req.query.turn || null;
 
     if (!page || page < 1){
         page = 1;
@@ -105,11 +109,78 @@ commodity.get('/GetAllCommodity', function (req, res, next){
         }
     });
 
-    console.log('search: key=' + key + ', category=' + cid + ', min=' + min + ', max=' + max + '. has ' + result.length + ' result. page = ' + page);
+    //sort
+    if (order && result.length && order in result[0]){
+        if (turn != 'inc'){
+            turn = 'desc';
+        }
+        for (var i = 0, count = result.length; i < count; i++){
+            for (var j = i; j < count; j++){
+                var flag = false;
+                if (turn == 'inc'){
+                    if (result[i][order] > result[j][order]){
+                        flag =true;
+                    }
+                } else {
+                    if (result[i][order] < result[j][order]){
+                        flag =true;
+                    }
+                }
+                if (flag){
+                    var _t = result[i];
+                    result[i] = result[j];
+                    result[j] = _t;
+                }
+            }
+        }
+    }
+
+    console.log('search: key=' + key + ', category=' + cid + ', min=' + min + ', max=' + max + ', order=' + order + ', turn=' + turn + '. has ' + result.length + ' result. page = ' + page);
     result = result.slice((page - 1) * countPerPage, page * countPerPage);
     res.send(JSON.stringify({
         commodityItem:result
     }));
+});
+
+commodity.get('/GetCommodityDetail', function (req, res, next){
+    var commodity_id = parseInt(req.query.commodity_id);
+    var result;
+    if (!commodity_id){
+        return {
+            commodityItem: {}
+        }
+    }
+    var commodity;
+    data.map(function (item, index){
+        if (item.commodity_id == commodity_id){
+            commodity = item;
+        }
+    });
+    //console.log(commodity);
+
+    var defaultOpt = {
+        host: '172.17.18.80',
+        port: 8080,
+        method: 'GET',
+    }
+    defaultOpt.path = 'http://eshop.airchina.com.cn/Pro/Product_Info.aspx?pid=' + commodity_id;
+
+    var html = '';
+    var request = http.request(defaultOpt, function (res){
+        res.on('data', function (data){
+            html += data.toString();
+            var reg = /<div align="center"><img src="([^"]*)"/g;
+            result = reg.test(html);
+            console.log(result);
+            /*
+            console.log('------------------------');
+            console.log(html);
+            console.log('------------------------');*/
+        });
+    }).on('error', function (err){
+        console.log(err)
+    });
+    request.end();
 });
 
 commodity.get('/love66', function (req, res, next){

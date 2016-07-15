@@ -133,7 +133,15 @@ html,body{
                 }
             }
         }
-
+        .mileager-filter-mask{
+            position:fixed;
+            z-index:800;
+            top:0;
+            left:0;
+            right:0;
+            bottom:0;
+            display:none;
+        }
         .mileager-filter{
             position:fixed;
             width:100%;
@@ -156,6 +164,10 @@ html,body{
 
                     .glyphicon{
                         font-size:12px;
+                    }
+
+                    &.selected{
+                        background-color:#dff3b8;
                     }
                 }
             }

@@ -20,7 +20,9 @@ var G = window.G || {
     cid:null,
     cate:[],
     max:null,
-    min:null
+    min:null,
+    order: null,
+    turn:null
 }
 G.reset = function (){
     this.keywords = null;
@@ -28,6 +30,8 @@ G.reset = function (){
     this.cate = [];
     this.max = null,
     this.min = null;
+    this.order = null;
+    this.turn = null;
 };
 var CA_CAT = {
     'jd': [12], //家用电器
@@ -56,9 +60,6 @@ $(function (){
                     var val = $('#search').val();
                     if (val){
                         G.keywords = val;
-                        M.toPage('_list');
-                    } else {
-                        G.keywords = null;
                         M.toPage('_list');
                     }
                 });
@@ -107,7 +108,11 @@ $(function (){
                             data:{
                                 keywords:G.keywords,
                                 Page_num:_p,
-                                cid: G.cid
+                                cid: G.cid,
+                                min: G.min,
+                                max: G.max,
+                                order: G.order,
+                                turn: G.turn
                             },
                             onFinish: function (html){
                                 $(document).scrollTop(0);
@@ -137,16 +142,64 @@ $(function (){
                 $('#filterBtn').on('click', function (){
                     var $this = $(this);
                     var $f = $('#filter');
-                    if ($this.hasClass('focus')){
-                        $this.removeClass('focus');
-                        $f.hide();
-                    } else {
+                    var $mask = $('#filterMask');
+                    if (!$this.hasClass('focus')){
                         $this.addClass('focus');
+                        $mask.show();
                         $f.show();
                     }
                 });
                 $('#back').on('click', function (){
                     M.toPage('_home');
+                });
+                $('#filter .filter-item').on('click', function(){
+                    var $this = $(this);
+                    var turn = $this.attr('data-turn');
+                    $('#filter .filter-item').removeClass('selected').attr('data-turn', '').find('.glyphicon').hide();
+                    if (turn == ''){
+                        $this.attr('data-turn', 'inc');
+                        $this.addClass('selected');
+                        $this.find('.glyphicon').show().removeClass('glyphicon-arrow-down glyphicon-arrow-up').addClass('glyphicon-arrow-up');
+                    } else if (turn == 'inc'){
+                        $this.attr('data-turn', 'desc');
+                        $this.addClass('selected');
+                        $this.find('.glyphicon').show().removeClass('glyphicon-arrow-down glyphicon-arrow-up').addClass('glyphicon-arrow-down');
+                    } else {
+                        $this.attr('data-turn', '');
+                        $this.find('.glyphicon').hide()
+                    }
+                });
+                $('#filterMask').off('.mileager').on('click.mileager', function (){
+                    var $t = $('#filter .filter-item.selected');
+                    if (!$t.length){
+                        G.order = null;
+                        G.turn = null;
+                    } else {
+                        G.order = $t.attr('data-t');
+                        G.turn = $t.attr('data-turn');
+                    }
+                    _p = 1;
+                    M.getHTML({
+                        id: '_listPage',
+                        isShowLoading:true,
+                        url:'http://127.0.0.1:3000/commodity/GetAllCommodity',
+                        data:{
+                            keywords:G.keywords,
+                            Page_num:_p,
+                            cid: G.cid,
+                            min: G.min,
+                            max: G.max,
+                            order: G.order,
+                            turn: G.turn
+                        },
+                        onFinish: function (html){
+                            $(document).scrollTop(0);
+                            $('#productList').html('').append(html);
+                            $('#filterMask').hide();
+                            $('#filter').hide();
+                            $('#filterBtn').removeClass('focus');
+                        }
+                    });
                 });
 
                 var showSide = function (){
@@ -216,7 +269,9 @@ $(function (){
                             Page_num:_p,
                             cid: str,
                             min: G.min,
-                            max: G.max
+                            max: G.max,
+                            order: G.order,
+                            turn: G.turn
                         },
                         onFinish: function (html){
                             $(document).scrollTop(0);
@@ -276,7 +331,9 @@ $(function (){
                                 keywords: G.keywords,
                                 cid: G.cid,
                                 min: G.min,
-                                max: G.max
+                                max: G.max,
+                                order: G.order,
+                                turn: G.turn
                             },
                             onFinish: function (html){
                                 $('#productList').append(html);
@@ -431,6 +488,7 @@ $(function (){
     </script>
     <script id="_list" type="text/x-handlebars-template">
         <main class="main-page">
+            <div class="mileager-filter-mask" id="filterMask"></div>
             <section class="mileager-header">
                 <span class="title">
                     <div class="search-panel">
@@ -452,15 +510,15 @@ $(function (){
             </section>
             <section class="mileager-filter" id="filter">
                 <div class="filter-outer">
-                    <div class="filter-item">
-                        里程
+                    <div class="filter-item" data-t="commodity_mile" data-turn="">
+                        里程<span class="glyphicon glyphicon-arrow-down" aria-hidden="true" style="display:none"></span>
                     </div>
-                    <div class="filter-item">
-                        收藏
+                    <div class="filter-item" data-t="commodity_collection" data-turn="">
+                        收藏<span class="glyphicon glyphicon-arrow-down" aria-hidden="true" style="display:none"></span>
                     </div>
-                    <div class="filter-item">
-                        值
-                    </div> 
+                    <div class="filter-item" data-t="commodity_values" data-turn="">
+                        值<span class="glyphicon glyphicon-arrow-down" aria-hidden="true" style="display:none"></span>
+                    </div>
                 </div>
             </section>
             <section class="mileager-main">

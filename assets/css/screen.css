@@ -110,6 +110,15 @@ body {
   .mileager .mileager-header .header-btn.focus {
     color: #f7d992;
   }
+  .mileager .mileager-filter-mask {
+    position: fixed;
+    z-index: 800;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: none;
+  }
   .mileager .mileager-filter {
     position: fixed;
     width: 100%;
@@ -132,6 +141,9 @@ body {
   }
   .mileager .mileager-filter .filter-outer .filter-item .glyphicon {
     font-size: 12px;
+  }
+  .mileager .mileager-filter .filter-outer .filter-item.selected {
+    background-color: #dff3b8;
   }
   .mileager .mileager-filter:after {
     position: absolute;
