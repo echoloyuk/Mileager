@@ -69,6 +69,9 @@
 .home-panel .panel-main .section1 .items .name {
   margin-top: 6px;
 }
+.home-panel .panel-main .section1 .items.disabled {
+  opacity: 0.5;
+}
 .home-panel .panel-main .section2 {
   overflow: hidden;
   margin: 10px 0;

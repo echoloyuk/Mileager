@@ -142,6 +142,7 @@ commodity.get('/GetAllCommodity', function (req, res, next){
     }));
 });
 
+//http://127.0.0.1:3000/commodity/GetCommodityDetail?commodity_id=2075
 commodity.get('/GetCommodityDetail', function (req, res, next){
     var commodity_id = parseInt(req.query.commodity_id);
     var result;
@@ -156,7 +157,6 @@ commodity.get('/GetCommodityDetail', function (req, res, next){
             commodity = item;
         }
     });
-    //console.log(commodity);
 
     var defaultOpt = {
         host: '172.17.18.80',
@@ -166,16 +166,30 @@ commodity.get('/GetCommodityDetail', function (req, res, next){
     defaultOpt.path = 'http://eshop.airchina.com.cn/Pro/Product_Info.aspx?pid=' + commodity_id;
 
     var html = '';
-    var request = http.request(defaultOpt, function (res){
-        res.on('data', function (data){
-            html += data.toString();
-            var reg = /<div align="center"><img src="([^"]*)"/g;
-            result = reg.test(html);
-            console.log(result);
-            /*
-            console.log('------------------------');
-            console.log(html);
-            console.log('------------------------');*/
+    var detailUrl = '';
+    var request = http.request(defaultOpt, function (_res){
+        _res.on('data', function (data){
+            html += data;
+        });
+        _res.on('end', function (){
+            var temp = html.substring(html.indexOf('<!--商品详情 开始-->'), html.indexOf('<!--商品详情 结束-->'));
+
+            var reg = /src="(.*?)"/g;
+            detailUrl = reg.exec(temp);
+            if (detailUrl){
+                detailUrl = detailUrl[1];
+                console.log('find detail: ' + detailUrl);
+
+                commodity.detail_url = detailUrl;
+                res.send(JSON.stringify({
+                    commodityItem:commodity
+                }));
+            } else {
+                console.log('----------- reg cannot match the detail url :');
+                console.log('src = ' + temp);
+                console.log('-----------');
+            }
+
         });
     }).on('error', function (err){
         console.log(err)

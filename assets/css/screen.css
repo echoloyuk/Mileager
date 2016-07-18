@@ -360,7 +360,11 @@ body {
   }
   .mileager .img-scroller .inner {
     height: 100%;
-    width: 10000px;
+    width: 100%;
+    text-align: center;
+  }
+  .mileager .img-scroller .inner img {
+    height: 100%;
   }
   .mileager .img-scroller .pt-panel {
     position: absolute;
