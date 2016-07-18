@@ -51,7 +51,7 @@ $(function (){
     var M = new window.Mileager($('#page'));
     var opt = {
         '_home': {
-            url: 'http://www.himachi.cn:3000/commodity/GetAllHotCommodity',
+            url: 'http://127.0.0.1:3000/commodity/GetAllHotCommodity',
             onBeforeLoad: function (data){
                 return data;
             },
@@ -96,7 +96,7 @@ $(function (){
             }
         },
         '_list': {
-            url: 'http://www.himachi.cn:3000/commodity/GetAllCommodity',
+            url: 'http://127.0.0.1:3000/commodity/GetAllCommodity',
             onBeforeLoad: function (){
                 console.log(window.G);
                 return {
@@ -120,7 +120,7 @@ $(function (){
                         M.getHTML({
                             id: '_listPage',
                             isShowLoading:true,
-                            url:'http://www.himachi.cn:3000/commodity/GetAllCommodity',
+                            url:'http://127.0.0.1:3000/commodity/GetAllCommodity',
                             data:{
                                 keywords:G.keywords,
                                 Page_num:_p,
@@ -200,7 +200,7 @@ $(function (){
                     M.getHTML({
                         id: '_listPage',
                         isShowLoading:true,
-                        url:'http://www.himachi.cn:3000/commodity/GetAllCommodity',
+                        url:'http://127.0.0.1:3000/commodity/GetAllCommodity',
                         data:{
                             keywords:G.keywords,
                             Page_num:_p,
@@ -281,7 +281,7 @@ $(function (){
                     M.getHTML({
                         id: '_listPage',
                         isShowLoading:true,
-                        url:'http://www.himachi.cn:3000/commodity/GetAllCommodity',
+                        url:'http://127.0.0.1:3000/commodity/GetAllCommodity',
                         data:{
                             keywords:G.keywords,
                             Page_num:_p,
@@ -349,7 +349,7 @@ $(function (){
                         
                         M.getHTML({
                             id: '_listPage',
-                            url: 'http://www.himachi.cn:3000/commodity/GetAllCommodity',
+                            url: 'http://127.0.0.1:3000/commodity/GetAllCommodity',
                             data: {
                                 Page_num: _p,
                                 keywords: G.keywords,
@@ -374,7 +374,7 @@ $(function (){
             }
         },
         '_detail': {
-            url: 'http://www.himachi.cn:3000/commodity/GetCommodityDetail',
+            url: 'http://127.0.0.1:3000/commodity/GetCommodityDetail',
             onFinish: function (){
                 $('#back').on('click', function (){
                     M.toPage(G.history);

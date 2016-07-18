@@ -439,4 +439,7 @@ body {
   .mileager .product-panel .product-img {
     width: 100%;
   }
+  .mileager .product-panel img {
+    width: 100%;
+  }
 }

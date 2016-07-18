@@ -166,30 +166,26 @@ commodity.get('/GetCommodityDetail', function (req, res, next){
     defaultOpt.path = 'http://eshop.airchina.com.cn/Pro/Product_Info.aspx?pid=' + commodity_id;
 
     var html = '';
-    var detailUrl = '';
-    var request = http.request(defaultOpt, function (_res){
+    var detailInfo = '';
+    //var request = http.get(defaultOpt.path, function (_res){
+    var request = http.get(defaultOpt, function (_res){
         _res.on('data', function (data){
             html += data;
         });
         _res.on('end', function (){
-            var temp = html.substring(html.indexOf('<!--商品详情 开始-->'), html.indexOf('<!--商品详情 结束-->'));
+            var temp = html.substr(html.indexOf('<div class="info-content">') + '<div class="info-content">'.length);
+            temp = temp.substr(0, temp.indexOf('</div>'));
 
-            var reg = /src="(.*?)"/g;
-            detailUrl = reg.exec(temp);
-            if (detailUrl){
-                detailUrl = detailUrl[1];
-                console.log('find detail: ' + detailUrl);
-
-                commodity.detail_url = detailUrl;
-                res.send(JSON.stringify({
-                    commodityItem:commodity
-                }));
+            if (temp){
+                console.log(temp);
+                detailInfo = temp;
             } else {
-                console.log('----------- reg cannot match the detail url :');
-                console.log('src = ' + temp);
-                console.log('-----------');
+                console.log('-------- cannot find detail');
             }
-
+            commodity.commodity_detail = detailInfo;
+            res.send(JSON.stringify({
+                commodityItem:commodity
+            }));
         });
     }).on('error', function (err){
         console.log(err)
