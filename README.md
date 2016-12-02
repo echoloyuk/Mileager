@@ -9,11 +9,9 @@ app：航旅里程 的mob纯前端项目
 
 项目的[mockup粗原型](https://www.mockplus.cn/project/run/kpkNcqz2b1D07NgM?from=singlemessage&isappinstalled=0)
 
-![](doc/d-1.jpg)
+这个项目已经完成了前期的demo工作，它的使命已经达成。未来将有计划用React重构。
 
-![](doc/d-3.jpg)
-
-![](doc/d-4.jpg)
+> This repository is for my dear 66. And I love her so much.
 
 ## 团队成员
 
